@@ -1,5 +1,29 @@
 let allWorks = [];//variable globale afin de contenir touts les projets récupérés via l'api qui permet a nos éléments d'accéder aux projets à tout moment
 
+const token = localStorage.getItem("token");
+
+if (token) {
+    console.log("Utilisateur connecté");
+
+    // changer login → logout
+    const loginLink = document.querySelector("nav ul li a");
+
+    if (loginLink) {
+        loginLink.textContent = "logout";
+
+        loginLink.addEventListener("click", () => {
+            localStorage.removeItem("token");
+            window.location.href = "index.html";
+        });
+    }
+
+    // cacher les filtres
+    const filters = document.querySelector(".filters");
+    if (filters) {
+        filters.style.display = "none";
+    }
+}
+
 function displayWorks(works){//sert à construire dynamiquement le HTML ici affiche les projets dans la galerie
 
     const gallery = document.querySelector(".gallery");//récupération de la classe galerry afin d'y inserer nos éléments
