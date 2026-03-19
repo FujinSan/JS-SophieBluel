@@ -11,9 +11,11 @@ if (token) {
     if (loginLink) {
         loginLink.textContent = "logout";
 
-        loginLink.addEventListener("click", () => {
+        loginLink.addEventListener("click", (e) => {
+            e.preventDefault();
+
             localStorage.removeItem("token");
-            window.location.href = "index.html";
+            window.location.reload();
         });
     }
 
@@ -21,6 +23,18 @@ if (token) {
     const filters = document.querySelector(".filters");
     if (filters) {
         filters.style.display = "none";
+    }
+
+        // afficher la barre noire
+    const editMode = document.querySelector(".edit-mode");
+    if (editMode) {
+        editMode.style.display = "flex";
+    }
+
+    // afficher le bouton modifier
+    const editButton = document.querySelector(".edit-button");
+    if (editButton) {
+        editButton.style.display = "block";
     }
 }
 

@@ -12,6 +12,9 @@
 	<script src="script.js" defer></script>
 </head>
 <body>
+	<div class="edit-mode" style="display: none;">
+  		<p>🖉 Mode édition</p>
+	</div>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
@@ -36,7 +39,10 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="portfolio-header">
+			<h2>Mes Projets</h2>
+			<button class="edit-button" style="display: none;">🖉 modifier</button>
+		</div>
 		<div class="filters">
 		</div>
 		<div class="gallery">

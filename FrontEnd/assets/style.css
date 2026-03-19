@@ -244,7 +244,31 @@ main{
 flex:1;
 }
 
+.edit-mode {
+background-color: black;
+color: white;
+height: 50px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-family: 'Work Sans';
+font-size: 14px;
+}
 
+.portfolio-header {
+display: flex;
+justify-content: center;
+align-items:baseline;
+gap: 20px;
+}
+
+.edit-button {
+background: none;
+border: none;
+cursor: pointer;
+font-size: 14px;
+font-family: 'Work Sans';
+}
 
 /*partie login*/
 
