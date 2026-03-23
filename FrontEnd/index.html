@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="script.js" defer></script>
 </head>
+
 <body>
 	<div class="edit-mode" style="display: none;">
   		<p>🖉 Mode édition</p>
@@ -70,5 +71,65 @@
 		</ul>
 	</nav>
 </footer>
+<div id="modal" class="modal hidden">
+  <div class="modal-content">
+
+    <span class="close-modal">&times;</span>
+
+    <!-- GALERIE -->
+<div id="modal-gallery-view">
+  <h2>Galerie photo</h2>
+
+  <div class="modal-gallery"></div>
+
+  <!-- LIGNE -->
+  <hr class="modal-separator">
+
+  <!-- BOUTON -->
+  <button id="open-add-form" class="add-photo-btn">
+    Ajouter une photo
+  </button>
+</div>
+
+    <!-- FORMULAIRE -->
+    <div id="modal-add-view" class="hidden">
+      <h2>Ajout photo</h2>
+
+<form id="add-work-form">
+
+  <!-- ZONE UPLOAD -->
+  <div class="upload-container">
+    <div class="upload-box">
+      <span class="upload-icon">🖼️</span>
+		<label for="image" class="upload-btn">+ Ajouter photo</label>
+		<span id="file-name"></span>
+		<p>jpg, png : 4mo max</p>
+     <input type="file" id="image">
+    </div>
+  </div>
+
+  <!-- TITRE -->
+  <label>Titre</label>
+  <input type="text" id="title" required>
+
+  <!-- CATEGORIE -->
+  <label>Catégorie</label>
+<select id="category">
+  <option value="">-- Choisir une catégorie --</option>
+</select>
+  <hr>
+
+  <!-- BOUTON -->
+  <button type="submit" class="submit-btn" disabled>
+    Valider
+  </button>
+
+</form>
+      </form>
+
+    </div>
+
+  </div>
+</div>
 </body>
 </html>

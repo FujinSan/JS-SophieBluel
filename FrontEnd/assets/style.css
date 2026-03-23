@@ -323,3 +323,163 @@ text-align:center;
 text-decoration:underline;
 cursor:pointer;
 }
+
+/*partie modal*/
+
+/* overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* cacher */
+.hidden {
+  display: none;
+}
+
+/* contenu */
+.modal-content {
+  background: white;
+  padding: 30px;
+  width: 630px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.modal-content h2 {
+  font-size: 26px;
+  margin-bottom: 30px;
+}
+
+/* bouton fermer */
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* galerie */
+.modal-gallery {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.modal-gallery img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+}
+
+.modal-gallery div {
+  position: relative;
+}
+
+.modal-gallery button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: black;
+  border: none;
+  color: white;
+  font-size: 12px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.modal-separator {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+.add-photo-btn {
+  background-color: #1D6154;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 60px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#modal-add-view input,
+#modal-add-view select {
+  display: block;
+  margin: 10px 0;
+  width: 100%;
+}
+
+/* upload box */
+.upload-container {
+  background: #E8F1F6;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  height: 170px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-box {
+  width: 100%;
+}
+
+.upload-icon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.upload-btn {
+  background: #CBD6DC;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+/* inputs */
+#add-work-form input,
+#add-work-form select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 20px;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* bouton */
+.submit-btn {
+  width: 200px;
+  margin: auto;
+  display: block;
+  padding: 10px;
+  border-radius: 25px;
+  border: none;
+  background: #A7A7A7;
+  color: white;
+}
+
+/* bouton actif */
+.submit-btn.active {
+  background: #1D6154;
+}
+
+input[type="file"] {
+  display: none !important;
+}
