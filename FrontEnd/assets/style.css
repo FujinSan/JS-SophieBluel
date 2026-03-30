@@ -347,11 +347,12 @@ cursor:pointer;
 
 /* contenu */
 .modal-content {
-  background: white;
-  padding: 30px;
-  width: 630px;
-  border-radius: 10px;
-  text-align: center;
+	position: relative;
+	background: white;
+	padding: 30px;
+	width: 630px;
+	border-radius: 10px;
+	text-align: center;
 }
 
 .modal-content h2 {
@@ -416,9 +417,21 @@ cursor:pointer;
 
 #modal-add-view input,
 #modal-add-view select {
-  display: block;
-  margin: 10px 0;
-  width: 100%;
+    width: 420px;
+    height: 51px;
+	margin-bottom: 10px;
+    display: block;
+    border: none; 
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#modal-add-view label {
+    width: 100%;
+    max-width: 420px;
+    margin: 20px auto 5px;
+    text-align: left;
 }
 
 /* upload box */
@@ -427,52 +440,75 @@ cursor:pointer;
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 20px;
-  height: 170px;
-
+  height: 169px;
+  width: 420px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .upload-box {
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-box img {
+    width: 60px;
+    margin-bottom: 10px;
 }
 
 .upload-icon {
-  font-size: 40px;
-  display: block;
-  margin-bottom: 10px;
+    width: 60px;
+    margin-bottom: 10px;
+    opacity: 0.6;
 }
 
 .upload-btn {
-  background: #CBD6DC;
-  padding: 8px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  display: inline-block;
-  margin-bottom: 10px;
+    display: inline-block;
+    padding: 10px 10px;
+    margin: 10px 10px;
+    border-radius: 50px;
+    background-color: #CBD6DC;
+    color: #306685;
+    font-size: 14px;
+    font-family: 'Work Sans';
+    cursor: pointer;
+
 }
 
-/* inputs */
-#add-work-form input,
-#add-work-form select {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0 20px;
-  border: none;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+.upload-info {
+    font-size: 12px;
+    color: #444;
+    margin-top: 5px;
 }
 
-/* bouton */
+#modal-add-view h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* BOUTON VALIDER */
 .submit-btn {
-  width: 200px;
-  margin: auto;
-  display: block;
-  padding: 10px;
-  border-radius: 25px;
-  border: none;
-  background: #A7A7A7;
-  color: white;
+    width: 237px;
+    height: 36px;
+    border-radius: 60px;
+	background-color: #A7A7A7;
+	border: none;
+	color: white;
+    font-weight: 700;
+    font-family: 'Syne';
+}
+
+/* FLÈCHE RETOUR */
+.back-modal {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 22px;
+    cursor: pointer;
+    display: none;
 }
 
 /* bouton actif */
@@ -482,4 +518,24 @@ cursor:pointer;
 
 input[type="file"] {
   display: none !important;
+}
+
+#image {
+    display: none;
+}
+
+#modal-add-view {
+    flex-direction: column;
+    align-items: center;
+}
+
+#modal-add-view form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#modal-add-view hr {
+    width: 420px;
+    margin: 30px auto;
 }

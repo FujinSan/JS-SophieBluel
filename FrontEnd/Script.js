@@ -65,34 +65,35 @@ if (token) {
     }
 }
 
-function displayWorks(works){//sert à construire dynamiquement le HTML ici affiche les projets dans la galerie
+function displayWorks(works) {
 
-    const gallery = document.querySelector(".gallery");//récupération de la classe galerry afin d'y inserer nos éléments
-    gallery.innerHTML = "";//sert à éviter d'empiler les projets lors de l'utilisation d'un filtre
+    const gallery = document.querySelector(".gallery");
 
-    works.forEach(work => {//boucle qui va parcourir un tableau ici va traiter chaque projet individuellement
+    if (!gallery) return; 
 
-        const figure = document.createElement("figure");//création d'un élément ici le conteneur du projet
-        figure.dataset.id = work.id;//ajout de l'attribut data-id 
-        figure.dataset.categoryId = work.categoryId;//id de la categorie
-        figure.dataset.userId = work.userId;//id du projet en fonction de l'utilisateur
+    gallery.innerHTML = "";
 
-        const img = document.createElement("img");//création de la balise image ou sera afficher les photo 
-        img.src = work.imageUrl;//utilisation de l'image via l'api
-        img.alt = work.title;//texte pour les malvoyant
+    works.forEach(work => {
+        const figure = document.createElement("figure");
 
-        const figcaption = document.createElement("figcaption");//création de la légende qui va servir à afficher le titre 
-        figcaption.textContent = work.title;//affichage du titre
+        const img = document.createElement("img");
+        img.src = work.imageUrl;
 
-        figure.appendChild(img);//ajout de l'image dans figure
-        figure.appendChild(figcaption);//ajout du titre dans figure
+        const figcaption = document.createElement("figcaption");
+        figcaption.textContent = work.title;
 
-        gallery.appendChild(figure);//affichage de ce que contient figure dans la gallery 
+        figure.appendChild(img);
+        figure.appendChild(figcaption);
+
+        gallery.appendChild(figure);
     });
 }
 
 function displayModalWorks(works) {
     const modalGallery = document.querySelector(".modal-gallery");
+
+    if (!modalGallery) return; 
+
     modalGallery.innerHTML = "";
 
     works.forEach(work => {
@@ -171,61 +172,55 @@ fetch("http://localhost:5678/api/works")//appel de l'api
     displayModalWorks(allWorks);
 });
 
-    fetch("http://localhost:5678/api/categories")//appel de l'api pour les filtres
+fetch("http://localhost:5678/api/categories")
     .then(response => response.json())
-    .then(categories =>{
+    .then(categories => {
 
-    const filtersContainer = document.querySelector(".filters");//récupération de la div filtre pour inserer nos éléments va nous servir de conteneur
+        const filtersContainer = document.querySelector(".filters");
+        const select = document.getElementById("category");
 
-    const select = document.getElementById("category");
+        if (!filtersContainer || !select) return;
 
-    categories.forEach(category => {
-        const option = document.createElement("option");
-        option.value = category.id;
-        option.textContent = category.name;
-        select.appendChild(option);
+        categories.forEach(category => {
+            const option = document.createElement("option");
+            option.value = category.id;
+            option.textContent = category.name;
+            select.appendChild(option);
+        });
+
+        const allButton = document.createElement("button");
+        allButton.textContent = "Tous";
+        allButton.classList.add("active");
+        allButton.dataset.id = "0";
+
+        filtersContainer.appendChild(allButton);
+
+        allButton.addEventListener("click", () => {
+            setActiveButton(allButton);
+            displayWorks(allWorks);
+        });
+
+        categories.forEach(category => {
+
+            const button = document.createElement("button");
+            button.textContent = category.name;
+            button.dataset.id = category.id;
+
+            filtersContainer.appendChild(button);
+
+            button.addEventListener("click", () => {
+                setActiveButton(button);
+
+                const categoryId = parseInt(button.dataset.id);
+
+                const filteredWorks = allWorks.filter(work =>
+                    work.categoryId === categoryId
+                );
+
+                displayWorks(filteredWorks);
+            });
+        });
     });
-
-    const allButton = document.createElement("button");//création d'un boutton 
-    allButton.textContent = "Tous";//qu'on va nommer tous
-    allButton.classList.add("active"); // actif par défaut
-    allButton.dataset.id = "0"; // id set à 0 pour identifier le filtre tous 
-
-    filtersContainer.appendChild(allButton);//ajout du bouton dans la div filtre
-
-    allButton.addEventListener("click", () => {//detecteur de clic qui va permettre d'activer notre fonction
-
-      setActiveButton(allButton);//va activer visuellement le bouton 
-
-      displayWorks(allWorks);//va afficher tous les projets (reset des filtres)
-    });
-
-categories.forEach((category, index) => {//boucle des filtres afin de parcourire chaque catégorie
-
-  const button = document.createElement("button");//création des boutons
-
-  button.textContent = category.name;//on donne leurs noms récupérer via l'api
-  button.dataset.id = category.id;//on donne leurs id pareil via l'api 
-
-
-  filtersContainer.appendChild(button);//affichage des boutons dans la div filtre
-
-  button.addEventListener("click", () => {//detecteur de clic qui va permettre d'activer la fonction
-
-    setActiveButton(button);//activation visuelle du viltre 
-
-    const categoryId = parseInt(button.dataset.id);//conversion en nombre de l'id ("2" en 2 car considérer comme une chaine de caractère)
-
-    const filteredWorks = allWorks.filter(work =>//filtrage des projets par catégorie
-        work.categoryId === categoryId
-    );
-
-    displayWorks(filteredWorks);//affichafe des projets une fois filtrés
-
-    });
-
-    });
-  });
 
   // sélection éléments
 const modal = document.getElementById("modal");
@@ -247,11 +242,13 @@ if (closeModalBtn) {
 }
 
 // fermer en cliquant dehors
-modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-        modal.classList.add("hidden");
-    }
-});
+if (modal) {
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.classList.add("hidden");
+        }
+    });
+}
 
 const openAddBtn = document.getElementById("open-add-form");
 const galleryView = document.getElementById("modal-gallery-view");
@@ -321,28 +318,53 @@ const titleInput = document.getElementById("title");
 const categorySelect = document.getElementById("category");
 const submitBtn = document.querySelector(".submit-btn");
 
-function checkForm() {
-    if (
-        imageInput.files.length > 0 &&
-        titleInput.value.trim() !== "" &&
-        categorySelect.value !== ""
-    ) {
-        submitBtn.disabled = false;
-        submitBtn.classList.add("active");
-    } else {
-        submitBtn.disabled = true;
-        submitBtn.classList.remove("active");
-    }
-}
+if (imageInput && titleInput && categorySelect && submitBtn) {
 
-imageInput.addEventListener("change", checkForm);
-titleInput.addEventListener("input", checkForm);
-categorySelect.addEventListener("change", checkForm);
+    function checkForm() {
+        if (
+            imageInput.files.length > 0 &&
+            titleInput.value.trim() !== "" &&
+            categorySelect.value !== ""
+        ) {
+            submitBtn.disabled = false;
+            submitBtn.classList.add("active");
+        } else {
+            submitBtn.disabled = true;
+            submitBtn.classList.remove("active");
+        }
+    }
+
+    imageInput.addEventListener("change", checkForm);
+    titleInput.addEventListener("input", checkForm);
+    categorySelect.addEventListener("change", checkForm);
+}
 
 const fileNameDisplay = document.getElementById("file-name");
 
-imageInput.addEventListener("change", () => {
-    if (imageInput.files.length > 0) {
-        fileNameDisplay.textContent = imageInput.files[0].name;
-    }
-});
+if (imageInput && fileNameDisplay) {
+    imageInput.addEventListener("change", () => {
+        if (imageInput.files.length > 0) {
+            fileNameDisplay.textContent = imageInput.files[0].name;
+        }
+    });
+};
+
+const backBtn = document.querySelector(".back-modal");
+
+if (openAddBtn) {
+    openAddBtn.addEventListener("click", () => {
+        galleryView.classList.add("hidden");
+        addView.classList.remove("hidden");
+
+        backBtn.style.display = "block"; // 🔥 AJOUT
+    });
+}
+
+if (backBtn) {
+    backBtn.addEventListener("click", () => {
+        addView.classList.add("hidden");
+        galleryView.classList.remove("hidden");
+
+        backBtn.style.display = "none"; // 🔥 AJOUT
+    });
+}

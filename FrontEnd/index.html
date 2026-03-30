@@ -73,6 +73,7 @@
 </footer>
 <div id="modal" class="modal hidden">
   <div class="modal-content">
+	<span class="back-modal">←</span>
 
     <span class="close-modal">&times;</span>
 
@@ -98,15 +99,17 @@
 <form id="add-work-form">
 
   <!-- ZONE UPLOAD -->
-  <div class="upload-container">
-    <div class="upload-box">
-      <span class="upload-icon">🖼️</span>
+<div class="upload-container">
+	<div class="upload-box">
+		<img src="./assets/icons/photo.png">
+
 		<label for="image" class="upload-btn">+ Ajouter photo</label>
-		<span id="file-name"></span>
-		<p>jpg, png : 4mo max</p>
-     <input type="file" id="image">
-    </div>
-  </div>
+
+		<p class="upload-info">jpg, png : 4mo max</p>
+
+		<input type="file" id="image" hidden>
+	</div>
+</div>
 
   <!-- TITRE -->
   <label>Titre</label>
@@ -125,7 +128,6 @@
   </button>
 
 </form>
-      </form>
 
     </div>
 

@@ -1,7 +1,8 @@
 console.log("login.js chargé");
-const form = document.getElementById("login-form");
+const loginForm = document.getElementById("login-form");
 
-form.addEventListener("submit", async (event) => {
+if (loginForm) 
+    loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const email = document.getElementById("email").value;
