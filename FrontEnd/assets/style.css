@@ -270,6 +270,8 @@ font-size: 14px;
 font-family: 'Work Sans';
 }
 
+
+
 /*partie login*/
 
 .login{
@@ -391,12 +393,24 @@ cursor:pointer;
   position: absolute;
   top: 5px;
   right: 5px;
+
+  width: 24px;
+  height: 24px;
+
   background: black;
   border: none;
-  color: white;
-  font-size: 12px;
-  padding: 4px;
+  border-radius: 3px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   cursor: pointer;
+}
+
+.modal-gallery button i {
+  font-size: 12px;
+  color: white;
 }
 
 .modal-separator {
@@ -428,10 +442,8 @@ cursor:pointer;
 }
 
 #modal-add-view label {
-    width: 100%;
     max-width: 420px;
     margin: 20px auto 5px;
-    text-align: left;
 }
 
 /* upload box */
@@ -448,9 +460,16 @@ cursor:pointer;
 }
 
 .upload-box {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+
+    height: 170px;
+    background: #E8F1F6;
+    border-radius: 3px;
+    overflow: hidden;
 }
 
 .upload-box img {
@@ -466,22 +485,39 @@ cursor:pointer;
 
 .upload-btn {
     display: inline-block;
-    padding: 10px 10px;
-    margin: 10px 10px;
+    padding: 12px 10px;
     border-radius: 50px;
     background-color: #CBD6DC;
     color: #306685;
     font-size: 14px;
     font-family: 'Work Sans';
     cursor: pointer;
-
+	width: 173px;
 }
-
 
 .upload-info {
     font-size: 12px;
     color: #444;
     margin-top: 5px;
+}
+
+/* image par défaut */
+.preview-image {
+    width: 60px;
+    height: auto;
+}
+
+/* image après upload */
+.preview-image.full {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* cacher éléments */
+.upload-box.hide-elements .upload-btn,
+.upload-box.hide-elements .upload-info {
+    display: none;
 }
 
 #modal-add-view h2 {
@@ -538,4 +574,9 @@ input[type="file"] {
 #modal-add-view hr {
     width: 420px;
     margin: 30px auto;
+}
+
+.title{
+	width: 100%;
+	text-align: left;
 }

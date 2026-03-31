@@ -7,6 +7,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="script.js" defer></script>
@@ -14,7 +15,7 @@
 
 <body>
 	<div class="edit-mode" style="display: none;">
-  		<p>🖉 Mode édition</p>
+  		<p><i class="fa-solid fa-pen-to-square icon-edit"></i>Mode édition</p>
 	</div>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
@@ -42,7 +43,7 @@
 	<section id="portfolio">
 		<div class="portfolio-header">
 			<h2>Mes Projets</h2>
-			<button class="edit-button" style="display: none;">🖉 modifier</button>
+			<button class="edit-button"><i class="fa-solid fa-pen-to-square icon-edit"></i>modifier</button>
 		</div>
 		<div class="filters">
 		</div>
@@ -101,7 +102,7 @@
   <!-- ZONE UPLOAD -->
 <div class="upload-container">
 	<div class="upload-box">
-		<img src="./assets/icons/photo.png">
+		<img id="preview-image" class="preview-image" src="./assets/icons/photo.png">
 
 		<label for="image" class="upload-btn">+ Ajouter photo</label>
 
@@ -112,13 +113,13 @@
 </div>
 
   <!-- TITRE -->
-  <label>Titre</label>
+  <label class="title">Titre</label>
   <input type="text" id="title" required>
 
   <!-- CATEGORIE -->
-  <label>Catégorie</label>
+  <label class="title">Catégorie</label>
 <select id="category">
-  <option value="">-- Choisir une catégorie --</option>
+  <option value=""></option>
 </select>
   <hr>
 

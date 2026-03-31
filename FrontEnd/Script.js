@@ -1,4 +1,4 @@
-let allWorks = [];//variable globale afin de contenir touts les projets récupérés via l'api qui permet a nos éléments d'accéder aux projets à tout moment
+let allWorks = [];
 
 const token = localStorage.getItem("token");
 
@@ -103,9 +103,9 @@ function displayModalWorks(works) {
         const img = document.createElement("img");
         img.src = work.imageUrl;
 
-        // 🗑️ bouton delete
+        // bouton delete
         const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "🗑️";
+        deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
         deleteBtn.style.position = "absolute";
         deleteBtn.style.top = "5px";
         deleteBtn.style.right = "5px";
@@ -138,10 +138,10 @@ async function deleteWork(id) {
             throw new Error("Erreur suppression");
         }
 
-        // 🔄 mettre à jour le tableau
+        // mettre à jour le tableau
         allWorks = allWorks.filter(work => work.id !== id);
 
-        // 🔄 refresh affichage
+        // refresh affichage
         displayWorks(allWorks);
         displayModalWorks(allWorks);
 
@@ -151,24 +151,24 @@ async function deleteWork(id) {
     }
 }
 
-function setActiveButton(clickedButton){//fonction de la gestion de l'état des boutton ici changer le bouton actif
+function setActiveButton(clickedButton){
 
-    const buttons = document.querySelectorAll(".filters button");//récupération de tous les boutons filtres 
+    const buttons = document.querySelectorAll(".filters button");
 
-    buttons.forEach(button => {//boucle boutons qui va servir à parcourir chaque filtre
-        button.classList.remove("active");//sert à désactiver dans un premier temps l'effet actif du css
+    buttons.forEach(button => {
+        button.classList.remove("active");
     });
 
-    clickedButton.classList.add("active");//sert à activer dans un second temps au clic l'effet actif 
+    clickedButton.classList.add("active");
 }
 
-fetch("http://localhost:5678/api/works")//appel de l'api 
-  .then(response => response.json())//attente d'une réponse et si réponse transition en json
+fetch("http://localhost:5678/api/works")
+  .then(response => response.json())
   .then(works => {
 
-    allWorks = works;//stockage des donner afin de conserver les projets pour l'utilisation des filtres
+    allWorks = works;
 
-    displayWorks(allWorks);//affichage de tous les projets 
+    displayWorks(allWorks);
     displayModalWorks(allWorks);
 });
 
@@ -238,6 +238,8 @@ if (openModalBtn) {
 if (closeModalBtn) {
     closeModalBtn.addEventListener("click", () => {
         modal.classList.add("hidden");
+
+        resetUploadForm(); 
     });
 }
 
@@ -246,6 +248,8 @@ if (modal) {
     modal.addEventListener("click", (e) => {
         if (e.target === modal) {
             modal.classList.add("hidden");
+
+            resetUploadForm();
         }
     });
 }
@@ -262,6 +266,18 @@ if (openAddBtn) {
 }
 
 const form = document.getElementById("add-work-form");
+
+function resetUploadForm() {
+    const form = document.getElementById("add-work-form");
+
+    if (form) form.reset();
+
+    if (previewImage && uploadBox) {
+        previewImage.src = "./assets/icons/photo.png";
+        previewImage.classList.remove("full");
+        uploadBox.classList.remove("hide-elements");
+    }
+}
 
 if (form) {
     form.addEventListener("submit", async (e) => {
@@ -302,6 +318,10 @@ if (form) {
             // reset form
             form.reset();
 
+            previewImage.src = "./assets/icons/photo.png";
+            previewImage.classList.remove("full");
+            uploadBox.classList.remove("hide-elements");
+
             // retour galerie
             addView.classList.add("hidden");
             galleryView.classList.remove("hidden");
@@ -314,6 +334,24 @@ if (form) {
 }
 
 const imageInput = document.getElementById("image");
+
+const uploadBox = document.querySelector(".upload-box");
+const previewImage = document.getElementById("preview-image");
+
+if (imageInput && previewImage && uploadBox) {
+    imageInput.addEventListener("change", () => {
+        const file = imageInput.files[0];
+
+        if (file) {
+            const imageUrl = URL.createObjectURL(file);
+            previewImage.src = imageUrl;
+
+            previewImage.classList.add("full");
+            uploadBox.classList.add("hide-elements");
+        }
+    });
+}
+
 const titleInput = document.getElementById("title");
 const categorySelect = document.getElementById("category");
 const submitBtn = document.querySelector(".submit-btn");
@@ -356,7 +394,7 @@ if (openAddBtn) {
         galleryView.classList.add("hidden");
         addView.classList.remove("hidden");
 
-        backBtn.style.display = "block"; // 🔥 AJOUT
+        backBtn.style.display = "block"; 
     });
 }
 
@@ -365,6 +403,8 @@ if (backBtn) {
         addView.classList.add("hidden");
         galleryView.classList.remove("hidden");
 
-        backBtn.style.display = "none"; // 🔥 AJOUT
+        backBtn.style.display = "none";
+
+        resetUploadForm(); 
     });
 }
