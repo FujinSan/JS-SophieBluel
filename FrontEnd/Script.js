@@ -2,6 +2,7 @@ let allWorks = [];
 
 const token = localStorage.getItem("token");
 
+// authentification
 if (token) {
     console.log("Utilisateur connecté");
 
@@ -65,6 +66,7 @@ if (token) {
     }
 }
 
+// Affichage page principale
 function displayWorks(works) {
 
     const gallery = document.querySelector(".gallery");
@@ -89,6 +91,7 @@ function displayWorks(works) {
     });
 }
 
+// Affichage modal
 function displayModalWorks(works) {
     const modalGallery = document.querySelector(".modal-gallery");
 
@@ -123,6 +126,7 @@ function displayModalWorks(works) {
     });
 }
 
+// Supression API
 async function deleteWork(id) {
     const token = localStorage.getItem("token");
 
@@ -138,7 +142,7 @@ async function deleteWork(id) {
             throw new Error("Erreur suppression");
         }
 
-        // mettre à jour le tableau
+        // mise à jour locale
         allWorks = allWorks.filter(work => work.id !== id);
 
         // refresh affichage
@@ -151,6 +155,7 @@ async function deleteWork(id) {
     }
 }
 
+// Gestion Filtres
 function setActiveButton(clickedButton){
 
     const buttons = document.querySelectorAll(".filters button");
@@ -162,6 +167,7 @@ function setActiveButton(clickedButton){
     clickedButton.classList.add("active");
 }
 
+// Fetch projet
 fetch("http://localhost:5678/api/works")
   .then(response => response.json())
   .then(works => {
@@ -172,6 +178,7 @@ fetch("http://localhost:5678/api/works")
     displayModalWorks(allWorks);
 });
 
+// Fetch cate + filtres
 fetch("http://localhost:5678/api/categories")
     .then(response => response.json())
     .then(categories => {
@@ -181,6 +188,7 @@ fetch("http://localhost:5678/api/categories")
 
         if (!filtersContainer || !select) return;
 
+        // Remplir select
         categories.forEach(category => {
             const option = document.createElement("option");
             option.value = category.id;
@@ -188,6 +196,7 @@ fetch("http://localhost:5678/api/categories")
             select.appendChild(option);
         });
 
+        // Bouton tous
         const allButton = document.createElement("button");
         allButton.textContent = "Tous";
         allButton.classList.add("active");
@@ -200,6 +209,7 @@ fetch("http://localhost:5678/api/categories")
             displayWorks(allWorks);
         });
 
+        // Bouton caté
         categories.forEach(category => {
 
             const button = document.createElement("button");
@@ -209,64 +219,66 @@ fetch("http://localhost:5678/api/categories")
             filtersContainer.appendChild(button);
 
             button.addEventListener("click", () => {
-                setActiveButton(button);
+            setActiveButton(button);
 
-                const categoryId = parseInt(button.dataset.id);
+            const categoryId = parseInt(button.dataset.id);
 
-                const filteredWorks = allWorks.filter(work =>
-                    work.categoryId === categoryId
-                );
+            const filteredWorks = allWorks.filter(work =>
+                work.categoryId === categoryId
+            );
 
-                displayWorks(filteredWorks);
+            displayWorks(filteredWorks);
             });
         });
     });
 
-  // sélection éléments
+
+// Gestion open/shut
 const modal = document.getElementById("modal");
 const openModalBtn = document.querySelector(".edit-button");
 const closeModalBtn = document.querySelector(".close-modal");
 
-// ouvrir
+// Ouvrir
 if (openModalBtn) {
     openModalBtn.addEventListener("click", () => {
-        modal.classList.remove("hidden");
+    modal.classList.remove("hidden");
     });
 }
 
-// fermer (croix)
+// Fermer (croix)
 if (closeModalBtn) {
     closeModalBtn.addEventListener("click", () => {
-        modal.classList.add("hidden");
+    modal.classList.add("hidden");
 
-        resetUploadForm(); 
+    resetUploadForm(); 
     });
 }
 
-// fermer en cliquant dehors
+// Fermer dehors
 if (modal) {
     modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-            modal.classList.add("hidden");
+    if (e.target === modal) {
+        modal.classList.add("hidden");
 
-            resetUploadForm();
+        resetUploadForm();
         }
     });
 }
 
+// Nav modal 
 const openAddBtn = document.getElementById("open-add-form");
 const galleryView = document.getElementById("modal-gallery-view");
 const addView = document.getElementById("modal-add-view");
 
 if (openAddBtn) {
     openAddBtn.addEventListener("click", () => {
-        galleryView.classList.add("hidden");
-        addView.classList.remove("hidden");
+    galleryView.classList.add("hidden");
+    addView.classList.remove("hidden");
     });
 }
 
-const form = document.getElementById("add-work-form");
 
+// Reset Form upload
 function resetUploadForm() {
     const form = document.getElementById("add-work-form");
 
@@ -279,6 +291,7 @@ function resetUploadForm() {
     }
 }
 
+// Submit add projet
 if (form) {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -309,7 +322,7 @@ if (form) {
 
             const newWork = await response.json();
 
-            // 🔄 mise à jour
+            //  mise à jour
             allWorks.push(newWork);
 
             displayWorks(allWorks);
@@ -333,8 +346,8 @@ if (form) {
     });
 }
 
+// Preview upload
 const imageInput = document.getElementById("image");
-
 const uploadBox = document.querySelector(".upload-box");
 const previewImage = document.getElementById("preview-image");
 
@@ -352,6 +365,7 @@ if (imageInput && previewImage && uploadBox) {
     });
 }
 
+// Validation Form
 const titleInput = document.getElementById("title");
 const categorySelect = document.getElementById("category");
 const submitBtn = document.querySelector(".submit-btn");
@@ -387,6 +401,7 @@ if (imageInput && fileNameDisplay) {
     });
 };
 
+// Bouton back modal
 const backBtn = document.querySelector(".back-modal");
 
 if (openAddBtn) {

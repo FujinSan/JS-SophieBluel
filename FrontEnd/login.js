@@ -1,6 +1,7 @@
 console.log("login.js chargé");
 const loginForm = document.getElementById("login-form");
 
+// form connexion
 if (loginForm) 
     loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -11,6 +12,7 @@ if (loginForm)
     const errorMessage = document.getElementById("error-message");
     errorMessage.textContent = "";
 
+    // fetch api login
     try {
         const response = await fetch("http://localhost:5678/api/users/login", {
             method: "POST",
@@ -29,10 +31,10 @@ if (loginForm)
 
         const data = await response.json();
 
-        // 🔐 stockage du token
+        //  stockage du token
         localStorage.setItem("token", data.token);
 
-        // 🔁 redirection
+        //  redirection
         window.location.href = "index.html";
 
     } catch (error) {
